@@ -9,7 +9,8 @@ public class GravityManagerScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+		GravityManager.instance.tickBodies();
 	}
 	void OnGUI() {
 		GUI.Label( new Rect(0,0,Screen.width, Screen.height), string.Format("Score: {0}", GravityManager.instance.bodies.Count));
