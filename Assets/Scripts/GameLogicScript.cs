@@ -8,6 +8,7 @@ public class GameLogicScript : MonoBehaviour {
 	public StoneScript rock1;
 	public StoneScript rock2;
 	public Transform Goal;
+	public Transform RockSpawnPoint;
 	
 	List<StoneScript> rockPrefabs;
 	int NumberOfTeams = 2;
@@ -15,10 +16,12 @@ public class GameLogicScript : MonoBehaviour {
 	int NextRock;
 	StoneScript currentStone;
 	List<List<Transform>> teamStones;
-	Vector3 PlatformCentre = new Vector3(0,0,0);
-	
+	CameraManScript cameraMan;
+
 	// Use this for initialization
 	void Start () {
+		cameraMan = FindObjectOfType<CameraManScript>();
+		if(cameraMan == null){print ("Can't find a camera man");}
 		NextRock = 0;
 		teamStones = new List<List<Transform>>();
 		rockPrefabs = new List<StoneScript>();
@@ -51,7 +54,7 @@ public class GameLogicScript : MonoBehaviour {
 	
 	private void PlaceNewRock()
 	{
-		currentStone = (StoneScript)Instantiate (rockPrefabs[NextRock], PlatformCentre, new Quaternion());
+		currentStone = (StoneScript)Instantiate (rockPrefabs[NextRock], RockSpawnPoint.transform.position, new Quaternion());
 		teamStones[NextRock].Add(currentStone.GetComponent<Transform>());
 		
 		NextRock++;
@@ -59,6 +62,8 @@ public class GameLogicScript : MonoBehaviour {
 		{
 			NextRock = 0;
 		}							
+		print ("Watching a new stone");
+		cameraMan.Watch(currentStone.transform);
 	}
 	
 	private void CalculateVictor()

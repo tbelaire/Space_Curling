@@ -33,26 +33,9 @@ public class StoneScript : MonoBehaviour
 			mousePositionInWorld.z = 0f;
 			this.transform.position = mousePositionInWorld;
 		}
-		if(isFlying)
-		{
-			float cameraHeight = Camera.main.transform.position.z; 
-			Camera.main.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, cameraHeight);
-		}
-		if(this.gameObject.rigidbody2D.velocity.x < 0.15 && this.gameObject.rigidbody2D.velocity.y < 0.15 && isFlying)
+		if(this.gameObject.rigidbody2D.velocity.sqrMagnitude < 0.15 && isFlying)
 		{
 			isFlying = false;
-			returnCamera();
-		}
-		
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			isGrabbed = false;
-			isFlying = false;
-			this.transform.position = this.startPosition;
-			this.rigidbody2D.velocity = Vector2.zero;
-			this.rigidbody2D.isKinematic = true;
-			this.GetComponent<OrbitingBodyScript>().RegisterGravity();
-			returnCamera();
 		}
 	}
 	
@@ -61,8 +44,6 @@ public class StoneScript : MonoBehaviour
 		if(!isFlying)
 		{
 			isGrabbed = true;
-			//print (startPosition);
-			//print ("Mouse is Down!");
 		}
 	}
 	
@@ -79,11 +60,5 @@ public class StoneScript : MonoBehaviour
 			this.rigidbody2D.velocity = difference * this.launchFactor;
 			//print ("Mouse is Up!");
 		}
-	}
-	
-	void returnCamera()
-	{
-		float cameraHeight = Camera.main.transform.position.z;
-		Camera.main.transform.position = new Vector3(this.startPosition.x, this.startPosition.y, cameraHeight);
 	}
 }
