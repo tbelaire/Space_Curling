@@ -6,15 +6,20 @@ public class StoneScript : MonoBehaviour
 
 	Vector3 startPosition;
 	bool isGrabbed = false;
+	bool isLaunched = false;
 	bool isFlying = false;
 
+	public bool IsFlying { get { return isFlying; } }
+	public bool IsLaunched { get { return isLaunched; } }
+
 	public float launchFactor = 1f;
+	public Transform GameLogic;
 
 	// Use this for initialization
 	void Start () 
 	{
 		this.startPosition = this.transform.position;
-		print (this.transform.position);
+		//print (this.transform.position);
 	}
 	
 	// Update is called once per frame
@@ -51,7 +56,7 @@ public class StoneScript : MonoBehaviour
 		if(!isFlying)
 		{
 			isGrabbed = true;
-			print (startPosition);
+			//print (startPosition);
 			//print ("Mouse is Down!");
 		}
 	}
@@ -62,6 +67,7 @@ public class StoneScript : MonoBehaviour
 		{
 			isGrabbed = false;
 			isFlying = true;
+			isLaunched = true;
 			
 			Vector3 difference = this.startPosition - this.transform.position;
 			this.rigidbody2D.velocity = difference * this.launchFactor;
