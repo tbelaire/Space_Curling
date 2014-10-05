@@ -18,6 +18,9 @@ public class StoneScript : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		// Prevent forces from acting on it until we launch it
+		this.rigidbody2D.isKinematic = true;
+
 		this.startPosition = this.transform.position;
 		//print (this.transform.position);
 	}
@@ -47,6 +50,8 @@ public class StoneScript : MonoBehaviour
 			isFlying = false;
 			this.transform.position = this.startPosition;
 			this.rigidbody2D.velocity = Vector2.zero;
+			this.rigidbody2D.isKinematic = true;
+			this.GetComponent<OrbitingBodyScript>().RegisterGravity();
 			returnCamera();
 		}
 	}
@@ -68,6 +73,7 @@ public class StoneScript : MonoBehaviour
 			isGrabbed = false;
 			isFlying = true;
 			isLaunched = true;
+			this.rigidbody2D.isKinematic = false;  // Forces act on it.
 			
 			Vector3 difference = this.startPosition - this.transform.position;
 			this.rigidbody2D.velocity = difference * this.launchFactor;

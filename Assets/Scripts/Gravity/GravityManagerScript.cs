@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class GravityManagerScript : MonoBehaviour {
 
-	private List<Transform> bodies = new List<Transform>();
+	private HashSet<Transform> bodies = new HashSet<Transform>();
 	public float gravityConstant = 111f;
 	// Use this for initialization
 	void Start () {
@@ -24,13 +24,16 @@ public class GravityManagerScript : MonoBehaviour {
 		bodies.Remove (body);
 	}
 	public void tickBodies() {
-		bodies.RemoveAll(item => item == null);
+		bodies.RemoveWhere(item => item == null);
 
 		foreach (Transform target in bodies) {
 			foreach(Transform other in bodies) {
 				if(target != other){
 					Vector2 distance = target.position - other.position;
-					target.rigidbody2D.AddForce((-gravityConstant/distance.sqrMagnitude) * distance.normalized);
+					target.rigidbody2D.AddForce(
+						other.rigidbody2D.mass *
+						(-gravityConstant/distance.sqrMagnitude)
+						* distance.normalized);
 				}
 			}
 		}
