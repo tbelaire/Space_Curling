@@ -62,7 +62,6 @@ public class GameLogicScript : MonoBehaviour {
 		{
 			NextRock = 0;
 		}							
-		print ("Watching a new stone");
 		cameraMan.Watch(currentStone.transform);
 	}
 	

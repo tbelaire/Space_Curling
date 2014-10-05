@@ -38,7 +38,20 @@ public class StoneScript : MonoBehaviour
 			isFlying = false;
 		}
 	}
-	
+
+	void OnCollisionEnter2D(Collision2D collider){
+		if(collider.gameObject.CompareTag("Dangerous")){
+			this.RemoveFromPlay ();
+		}
+	}
+	public void RemoveFromPlay(){
+		StartCoroutine(this.StartRemovingFromPlay());
+	}
+	IEnumerator StartRemovingFromPlay(){
+		yield return new WaitForSeconds(1f);
+		this.isFlying = false;
+	}
+
 	void OnMouseDown()
 	{
 		if(!isFlying)
