@@ -4,8 +4,9 @@ using System.Collections.Generic;
 public class GravityManager {
     private static GravityManager instanceInternal;
 	public List<Transform> bodies = new List<Transform>();
-    public static GravityManager instance
-    {
+	public float gravityConstant = 111f;
+
+    public static GravityManager instance {
         get
         {
             if (instanceInternal == null)
@@ -25,7 +26,7 @@ public class GravityManager {
 			foreach(Transform other in bodies) {
 				if(target != other){
 					Vector2 distance = target.position - other.position;
-					target.rigidbody2D.AddForce((-111f/distance.sqrMagnitude) * distance.normalized);
+					target.rigidbody2D.AddForce((-gravityConstant/distance.sqrMagnitude) * distance.normalized);
 				}
 			}
 		}
