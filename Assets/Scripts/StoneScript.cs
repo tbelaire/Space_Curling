@@ -13,7 +13,7 @@ public class StoneScript : MonoBehaviour
 	public bool IsLaunched { get { return isLaunched; } }
 
 	public float launchFactor = 1f;
-	public Transform GameLogic;
+	public string TeamName;
 
 	// Use this for initialization
 	void Start () 
@@ -41,17 +41,6 @@ public class StoneScript : MonoBehaviour
 		if(this.gameObject.rigidbody2D.velocity.x < 0.15 && this.gameObject.rigidbody2D.velocity.y < 0.15 && isFlying)
 		{
 			isFlying = false;
-			returnCamera();
-		}
-		
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			isGrabbed = false;
-			isFlying = false;
-			this.transform.position = this.startPosition;
-			this.rigidbody2D.velocity = Vector2.zero;
-			this.rigidbody2D.isKinematic = true;
-			this.GetComponent<OrbitingBodyScript>().RegisterGravity();
 			returnCamera();
 		}
 	}
