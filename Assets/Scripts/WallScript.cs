@@ -9,7 +9,6 @@ public class WallScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		print ("Hit A wall");
 		var s = other.GetComponent<StoneScript>();
 		if(s != null){
 			s.RemoveFromPlay();

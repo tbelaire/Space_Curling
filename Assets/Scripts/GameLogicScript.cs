@@ -13,7 +13,7 @@ public class GameLogicScript : MonoBehaviour {
 
 	List<StoneScript> rockPrefabs;
 	int NumberOfTeams = 2;
-	int NumberOfTurns = 1;
+	int NumberOfTurns = 4;
 	int NextRock;
 	bool gameOver;
 	int winningTeam;
@@ -92,8 +92,7 @@ public class GameLogicScript : MonoBehaviour {
 			bestDistances.Add(int.MaxValue);
 			for(int j = 0; j < NumberOfTurns; j++)
 			{
-				double distance = Math.Sqrt((teamStones[i][j].position.x - Goal.position.x) * (teamStones[i][j].position.x - Goal.position.x)
-				                            + (teamStones[i][j].position.y - Goal.position.y) * (teamStones[i][j].position.y - Goal.position.y));
+				double distance = (teamStones[i][j].position - Goal.position).magnitude;
 				if(distance < bestDistances[i])
 				{
 					bestDistances[i] = distance;
