@@ -9,31 +9,50 @@ public class GameLogicScript : MonoBehaviour {
 	public StoneScript rock2;
 	public Transform Goal;
 	public Transform RockSpawnPoint;
-	
+	public GUIStyle victoryStyle;
+
 	List<StoneScript> rockPrefabs;
 	int NumberOfTeams = 2;
-	int NumberOfTurns = 2;
+	int NumberOfTurns = 1;
 	int NextRock;
+	bool gameOver;
+	int winningTeam;
 	StoneScript currentStone;
 	List<List<Transform>> teamStones;
 	CameraManScript cameraMan;
 
+
 	// Use this for initialization
 	void Start () {
-		cameraMan = FindObjectOfType<CameraManScript>();
-		if(cameraMan == null){print ("Can't find a camera man");}
-		NextRock = 0;
+	
 		teamStones = new List<List<Transform>>();
+		Reset();
 		rockPrefabs = new List<StoneScript>();
-		for(int i = 0; i < NumberOfTeams; i++)
-		{
-			teamStones.Add(new List<Transform>());
-		}
 		rockPrefabs.Add(rock1);
 		rockPrefabs.Add(rock2);
 		//To add more teams you must add the corresponding prefabs here
 		
 		PlaceNewRock();
+	}
+	
+	void Reset()
+	{
+		foreach(List<Transform> team in teamStones)
+		{
+			foreach(Transform stone in team)
+			{
+				Destroy(stone.gameObject);
+			}
+		}
+		gameOver = false;
+		NextRock = 0;
+		teamStones = new List<List<Transform>>();
+		for(int i = 0; i < NumberOfTeams; i++)
+		{
+			teamStones.Add(new List<Transform>());
+		}
+		cameraMan = FindObjectOfType<CameraManScript>();
+		if(cameraMan == null){print ("Can't find a camera man");}
 	}
 	
 	// Update is called once per frame
@@ -81,15 +100,26 @@ public class GameLogicScript : MonoBehaviour {
 				}
 			}
 		}
-		int winner = 0;
+		winningTeam = 0;
 		for(int i = 0; i < NumberOfTeams; i++)
 		{
-			if(bestDistances[i] < bestDistances[winner])
+			if(bestDistances[i] < bestDistances[winningTeam])
 			{
-				winner = i;
+				winningTeam = i;
 			}
 		}
-		print ("Team " + winner + " Wins!!!");
+		gameOver = true;
+	}
+	
+	void OnGUI() {
+		if(gameOver)
+		{
+			GUI.Label( new Rect(320,220,Screen.width, Screen.height), string.Format("Team {0} Wins!!!", rockPrefabs[winningTeam].TeamName), victoryStyle);
+			if (GUI.Button(new Rect(480,330,100,25),"Play Again?"))
+			{
+				Reset();
+			}
+		}
 	}
 }
 

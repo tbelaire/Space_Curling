@@ -13,7 +13,7 @@ public class StoneScript : MonoBehaviour
 	public bool IsLaunched { get { return isLaunched; } }
 
 	public float launchFactor = 1f;
-	public Transform GameLogic;
+	public string TeamName;
 
 	// Use this for initialization
 	void Start () 
