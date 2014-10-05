@@ -35,7 +35,7 @@ public class StoneScript : MonoBehaviour
 			float cameraHeight = Camera.main.transform.position.z; 
 			Camera.main.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, cameraHeight);
 		}
-		if(this.gameObject.rigidbody2D.velocity == Vector2.zero && isFlying)
+		if(this.gameObject.rigidbody2D.velocity.x < 0.15 && this.gameObject.rigidbody2D.velocity.y < 0.15 && isFlying)
 		{
 			isFlying = false;
 			returnCamera();
