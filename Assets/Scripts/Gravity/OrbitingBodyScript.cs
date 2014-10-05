@@ -4,11 +4,15 @@ using System.Collections;
 
 public class OrbitingBodyScript : MonoBehaviour {
 
-	// Use this for initialization
+
 	void Start () {
-		GravityManager.instance.registerBody(this.transform);
-	
-	
+		GravityManagerScript gravityManager;
+		gravityManager = FindObjectOfType<GravityManagerScript>();
+		if(gravityManager == null){
+			print ("Warning, unable to find a gravity manager, floating freely");
+		} else {
+			gravityManager.registerBody(this.transform);
+		}
 	}
 	
 	// Update is called once per frame
