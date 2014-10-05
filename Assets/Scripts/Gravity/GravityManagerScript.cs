@@ -31,7 +31,7 @@ public class GravityManagerScript : MonoBehaviour {
 				if(target != other){
 					Vector2 distance = target.position - other.position;
 					target.rigidbody2D.AddForce(
-						other.rigidbody2D.mass *
+						other.rigidbody2D.mass * target.rigidbody2D.mass *
 						(-gravityConstant/distance.sqrMagnitude)
 						* distance.normalized);
 				}
