@@ -20,7 +20,12 @@ public class GravityManagerScript : MonoBehaviour {
     public void registerBody(Transform transform) {
 		bodies.Add(transform);
     }
+	public void removeBody(Transform body) {
+		bodies.Remove (body);
+	}
 	public void tickBodies() {
+		bodies.RemoveAll(item => item == null);
+
 		foreach (Transform target in bodies) {
 			foreach(Transform other in bodies) {
 				if(target != other){
